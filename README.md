@@ -38,5 +38,5 @@ Installation
 --------------
 
 ```sh
-cargo install --git https://github.com/0x75960
+cargo install --git https://github.com/0x75960/vts
 ```
