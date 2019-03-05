@@ -176,19 +176,25 @@ fn main() -> GenericResult<()> {
     }
 
     let stdin = std::io::stdin();
+
+    let mut once_init = false;
+
     for l in stdin.lock().lines() {
+        if once_init {
+            if opt.public_api {
+                std::thread::sleep(std::time::Duration::from_secs(15));
+            } else {
+                std::thread::sleep(std::time::Duration::from_millis(500));
+            }
+        }
+
         let line = l.unwrap();
         let report = match client.get_file_report(&line) {
             Ok(x) => x,
             Err(_) => FileReport::default(),
         };
         println!("{}\t{}", line, report.summary(&opt.vendors));
-
-        if opt.public_api {
-            std::thread::sleep(std::time::Duration::from_secs(15));
-        } else {
-            std::thread::sleep(std::time::Duration::from_millis(500));
-        }
+        once_init = true;
     }
 
     Ok(())
