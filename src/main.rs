@@ -158,6 +158,24 @@ struct Opt {
     /// sleep 15 sec for every request (default 500ms)
     #[structopt(short = "p", long = "use-public-api")]
     public_api: bool,
+
+    /// filter exists files (remove rows not exists on virustotal)
+    #[structopt(short = "e", long = "filter-exists")]
+    filter_exist: bool,
+
+    /// filter not exists files (remove rows exists on virustotal)
+    #[structopt(short = "E", long = "filter-not-exists")]
+    filter_not_exist: bool,
+
+    /// filter detected files (remove rows not detected on virustotal)
+    /// this includes -f option.
+    #[structopt(short = "d", long = "filter-detected")]
+    filter_detected: bool,
+
+    /// filter not detected files (remove rows detected least one vendor on virustotal) this
+    /// includes -f option.
+    #[structopt(short = "D", long = "filter-not-detected")]
+    filter_not_detected: bool,
 }
 
 fn main() -> GenericResult<()> {
@@ -179,20 +197,32 @@ fn main() -> GenericResult<()> {
 
     let mut once_init = false;
 
-    for l in stdin.lock().lines() {
-        if once_init {
-            if opt.public_api {
-                std::thread::sleep(std::time::Duration::from_secs(15));
-            } else {
-                std::thread::sleep(std::time::Duration::from_millis(500));
-            }
+    'hash_loop: for l in stdin.lock().lines() {
+        match once_init {
+            true if opt.public_api => std::thread::sleep(std::time::Duration::from_secs(15)),
+            true => std::thread::sleep(std::time::Duration::from_millis(500)),
+            _ => (),
         }
 
         let line = l.unwrap();
         let report = match client.get_file_report(&line) {
+            // remove rows exists on virustotal
+            Ok(_) if opt.filter_not_exist => continue 'hash_loop,
+
+            // remove rows exists on virustotal
+            Err(_) if opt.filter_exist || opt.filter_detected || opt.filter_not_detected => {
+                continue 'hash_loop;
+            }
             Ok(x) => x,
             Err(_) => FileReport::default(),
         };
+
+        match report.positives {
+            0 if opt.filter_detected == false => (),
+            i if i != 0 && opt.filter_not_detected == false => (),
+            _ => continue 'hash_loop,
+        };
+
         println!("{}\t{}", line, report.summary(&opt.vendors));
         once_init = true;
     }
