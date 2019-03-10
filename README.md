@@ -6,6 +6,9 @@ VirusTotal Summary for files
 usage
 -------
 
+* set VirusTotal apikey to environment variable `VTAPIKEY`
+  * exec with `-p` option if you use public apikey.
+
 * input hash list from stdin 
   * 1 hash / line
   * sha256 / sha1 / md5
