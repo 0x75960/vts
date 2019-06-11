@@ -185,7 +185,7 @@ fn main() -> GenericResult<()> {
 
     if opt.without_header == false {
         println!(
-            "resource\tsha1\tsha256\tmd5\t{}positives\ttotal\tscan_date\tpermalink",
+            "resource\tsha256\tsha1\tmd5\t{}positives\ttotal\tscan_date\tpermalink",
             match opt.vendors.len() {
                 0 => String::new(),
                 _ => format!("{}\t", opt.vendors.join("\t")),
