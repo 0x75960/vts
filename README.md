@@ -18,7 +18,7 @@ $ curl http://www.example.com/something/includes/ioc.html | IoCs hashes |  sort 
 ```
 
 ```tsv
-resource	sha1	sha256	md5	Microsoft	CrowdStrike	Cylance	positives	total	scan_date	permalink
+resource	sha256	sha1	md5	Microsoft	CrowdStrike	Cylance	positives	total	scan_date	permalink
 01e7207e732e67fb3280597ea39bb8ca59fba7bdede1bb4d509e0947d69a5e0a	01e7207e732e67fb3280597ea39bb8ca59fba7bdede1bb4d509e0947d69a5e0a	b4b16ef88bb78cccf06f4d1b7bcecda7fbf5cc0d	906fee48d6feae1aacdddee3893b8a4e	true	NA	NA	32	58	2019-02-25 19:49:11	https://www.virustotal.com/file/01e7207e732e67fb3280597ea39bb8ca59fba7bdede1bb4d509e0947d69a5e0a/analysis/1551124151/
 1790952c31d0f142519e8d5762bd441be97cb050b353ecdc91b19a8b44ea59d5	1790952c31d0f142519e8d5762bd441be97cb050b353ecdc91b19a8b44ea59d5	2b382c4cef6ed2d255ab710f5f1ef4f59c2f2c4d	416fa052af17cbb75efdaff82563c5b4	true	NA	NA	32	58	2019-02-25 19:49:14	https://www.virustotal.com/file/1790952c31d0f142519e8d5762bd441be97cb050b353ecdc91b19a8b44ea59d5/analysis/1551124154/
 19554594d13500ff0c0f5d73d07fa4ec0bf44ca2b3b2581be470cdd02919a7d0	19554594d13500ff0c0f5d73d07fa4ec0bf44ca2b3b2581be470cdd02919a7d0	57618f342c39f672338ee2f24188dbf523178eb4	52a848b6cab27457375d009db8cea4c9	true	NA	NA	37	59	2019-03-04 17:17:28	https://www.virustotal.com/file/19554594d13500ff0c0f5d73d07fa4ec0bf44ca2b3b2581be470cdd02919a7d0/analysis/1551719848/
